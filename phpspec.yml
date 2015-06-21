@@ -1,0 +1,15 @@
+---
+extensions:
+  - PhpSpec\Extension\CodeCoverageExtension
+suites:
+  jowy_suite:
+    namespace: Jowy\Routing
+    psr4_prefix: Jowy\Routing
+formatter.name: pretty
+code_coverage:
+  format:
+    - html
+    - clover
+  output:
+    html: coverage
+    clover: coverage.xml

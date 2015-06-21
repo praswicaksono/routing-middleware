@@ -1,0 +1,30 @@
+{
+    "name": "jowy/routing-middleware",
+    "description": "PSR 7 routing middleware",
+    "type": "Middleware",
+    "keywords": ["psr7", "middleware", "routing"],
+    "require": {
+        "php": ">=5.5.0",
+        "zendframework/zend-diactoros": "^1.0@dev",
+        "nikic/fast-route": "^0.5@dev",
+        "doctrine/cache": "^1.5@dev",
+        "zendframework/zend-stratigility": "^1.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.2@dev",
+        "henrikbjorn/phpspec-code-coverage": "^1.0@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Prasetyo Wicaksono",
+            "email": "pras@openmailbox.org"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Jowy\\Routing\\" : "src/"
+        }
+    }
+}

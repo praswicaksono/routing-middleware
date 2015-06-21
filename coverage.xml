@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1434902201">
+  <project timestamp="1434902201">
+    <package name="Jowy\Routing">
+      <file name="/home/jowy/Project/relay-routing-middleware/src/Routing.php">
+        <class name="Routing" namespace="Jowy\Routing" fullPackage="Jowy" package="Jowy">
+          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="60" elements="62" coveredelements="62"/>
+        </class>
+        <line num="33" type="method" name="__construct" crap="16" count="13"/>
+        <line num="38" type="stmt" count="13"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="40" type="stmt" count="2"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="47" type="stmt" count="12"/>
+        <line num="48" type="stmt" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="56" type="stmt" count="11"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="1"/>
+        <line num="59" type="stmt" count="1"/>
+        <line num="65" type="stmt" count="10"/>
+        <line num="69" type="stmt" count="3"/>
+        <line num="70" type="stmt" count="1"/>
+        <line num="71" type="stmt" count="1"/>
+        <line num="72" type="stmt" count="1"/>
+        <line num="78" type="stmt" count="2"/>
+        <line num="79" type="stmt" count="1"/>
+        <line num="80" type="stmt" count="1"/>
+        <line num="81" type="stmt" count="1"/>
+        <line num="82" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="85" type="stmt" count="2"/>
+        <line num="90" type="stmt" count="9"/>
+        <line num="91" type="stmt" count="9"/>
+        <line num="92" type="stmt" count="9"/>
+        <line num="93" type="stmt" count="9"/>
+        <line num="95" type="stmt" count="9"/>
+        <line num="100" type="stmt" count="9"/>
+        <line num="101" type="stmt" count="2"/>
+        <line num="102" type="stmt" count="2"/>
+        <line num="107" type="stmt" count="9"/>
+        <line num="108" type="stmt" count="9"/>
+        <line num="109" type="stmt" count="1"/>
+        <line num="110" type="stmt" count="1"/>
+        <line num="111" type="stmt" count="1"/>
+        <line num="114" type="stmt" count="8"/>
+        <line num="115" type="stmt" count="8"/>
+        <line num="123" type="method" name="__invoke" crap="8" count="7"/>
+        <line num="125" type="stmt" count="7"/>
+        <line num="127" type="stmt" count="7"/>
+        <line num="131" type="stmt" count="7"/>
+        <line num="132" type="stmt" count="2"/>
+        <line num="133" type="stmt" count="1"/>
+        <line num="134" type="stmt" count="1"/>
+        <line num="136" type="stmt" count="1"/>
+        <line num="137" type="stmt" count="1"/>
+        <line num="138" type="stmt" count="1"/>
+        <line num="142" type="stmt" count="5"/>
+        <line num="143" type="stmt" count="2"/>
+        <line num="144" type="stmt" count="1"/>
+        <line num="145" type="stmt" count="1"/>
+        <line num="147" type="stmt" count="1"/>
+        <line num="148" type="stmt" count="1"/>
+        <line num="149" type="stmt" count="1"/>
+        <line num="153" type="stmt" count="3"/>
+        <line num="154" type="stmt" count="3"/>
+        <line num="155" type="stmt" count="3"/>
+        <line num="156" type="stmt" count="7"/>
+        <line num="158" type="stmt" count="7"/>
+        <metrics loc="160" ncloc="105" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="60" elements="62" coveredelements="62"/>
+      </file>
+    </package>
+    <metrics files="1" loc="160" ncloc="105" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="60" elements="62" coveredelements="62"/>
+  </project>
+</coverage>
