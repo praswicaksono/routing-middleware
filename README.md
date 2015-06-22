@@ -1,6 +1,9 @@
 Routing Middleware
 ==================
 
+[![Build Status](https://travis-ci.org/Atriedes/routing-middleware.svg?branch=master)](https://travis-ci.org/Atriedes/routing-middleware)
+
+
 PSR 7 routing middleware based on [nikic/fast-route](https://github.com/nikic/FastRoute)
 
 Installation & Requirements
