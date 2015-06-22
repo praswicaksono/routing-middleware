@@ -1,6 +1,6 @@
 filter:
     paths: [src/*]
-    excluded_paths: [vendor/*, spec/*, coverage/*, cache/*]
+    excluded_paths: [vendor/*, spec/*, coverage/*]
 checks:
   php:
     code_rating: true
@@ -23,9 +23,3 @@ tools:
       standard: PSR2
     filter:
       paths: ['src']
-  php_loc:
-    enabled: true
-    excluded_dirs: [vendor, spec, cache, coverage]
-  php_cpd:
-    enabled: true
-    excluded_dirs: [vendor, spec, cache, coverage]
