@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "63d6875cef4b022e991be16c431aec11",
+    "hash": "0b90267be88fee271a0760a7ad4ad88b",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -75,6 +75,116 @@
                 "caching"
             ],
             "time": "2015-05-13 10:08:10"
+        },
+        {
+            "name": "filp/whoops",
+            "version": "1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filp/whoops.git",
+                "reference": "37b5e653c99cbb9113108d7dc59a0ddc306acc46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/37b5e653c99cbb9113108d7dc59a0ddc306acc46",
+                "reference": "37b5e653c99cbb9113108d7dc59a0ddc306acc46",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Whoops": "src/"
+                },
+                "classmap": [
+                    "src/deprecated"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filipe Dobreira",
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
+                }
+            ],
+            "description": "php error handling for cool kids",
+            "homepage": "https://github.com/filp/whoops",
+            "keywords": [
+                "error",
+                "exception",
+                "handling",
+                "library",
+                "silex-provider",
+                "whoops",
+                "zf2"
+            ],
+            "time": "2015-05-29 15:12:07"
+        },
+        {
+            "name": "jowy/exception-handling-middleware",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atriedes/exception-handling-middleware.git",
+                "reference": "39570a192fec954d9cec4217daf50bc2cd2e4693"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atriedes/exception-handling-middleware/zipball/39570a192fec954d9cec4217daf50bc2cd2e4693",
+                "reference": "39570a192fec954d9cec4217daf50bc2cd2e4693",
+                "shasum": ""
+            },
+            "require": {
+                "filp/whoops": "^1.1",
+                "psr/log": "^1.0",
+                "zendframework/zend-diactoros": "^1.0",
+                "zendframework/zend-stratigility": "^1.0"
+            },
+            "conflict": {
+                "symfony/http-kernel": ">=2.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^1.0",
+                "phpspec/phpspec": "^2.2"
+            },
+            "type": "middleware",
+            "autoload": {
+                "psr-4": {
+                    "Jowy\\ExceptionHandler\\": "src/",
+                    "Symfony\\Component\\HttpKernel\\Exception\\": "src/Exception/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Prasetyo Wicaksono",
+                    "email": "pras@openmailbox.org"
+                }
+            ],
+            "description": "PSR7 Http Exception Handling Middleware",
+            "keywords": [
+                "exception handling",
+                "middleware",
+                "psr-7"
+            ],
+            "time": "2015-06-22 06:42:32"
         },
         {
             "name": "nikic/fast-route",
@@ -169,6 +279,44 @@
             "time": "2015-05-04 20:22:00"
         },
         {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2012-12-21 11:40:51"
+        },
+        {
             "name": "zendframework/zend-diactoros",
             "version": "dev-develop",
             "source": {
@@ -178,7 +326,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/a6b66c7d70a0fd50b932528c33041ab64520a37a",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/7d41de000298efa565d2a39fbb0a5393c159e34a",
                 "reference": "a6b66c7d70a0fd50b932528c33041ab64520a37a",
                 "shasum": ""
             },
@@ -503,7 +651,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/370498293c224681bd4586737e93cd576c7c5a9e",
+                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/36c1e97d59630888fd022a542b1650ae5eab1f18",
                 "reference": "370498293c224681bd4586737e93cd576c7c5a9e",
                 "shasum": ""
             },
