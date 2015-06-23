@@ -9,6 +9,8 @@ use FastRoute\RouteCollector;
 use FastRoute\RouteParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zend\Stratigility\MiddlewareInterface;
 
 /**
@@ -129,23 +131,13 @@ class Routing implements MiddlewareInterface
              * if given uri dont match with our routes
              */
             case Dispatcher::NOT_FOUND:
-                if (isset($this->options["onNotFound"]) && is_callable($this->options["onNotFound"])) {
-                    $response = $this->options["onNotFound"]($request, $response);
-                    break;
-                }
-                $response = $response->withStatus(404);
-                $response->getBody()->write("Not Found");
+                throw new NotFoundHttpException("Not Found");
                 break;
             /**
              * if given uri match but method is not
              */
             case Dispatcher::METHOD_NOT_ALLOWED:
-                if (isset($this->options["onMethodNotAllowed"]) && is_callable($this->options["onMethodNotAllowed"])) {
-                    $response = $this->options["onMethodNotAllowed"]($request, $response);
-                    break;
-                }
-                $response = $response->withStatus(405);
-                $response->getBody()->write("Method Not Allowed");
+                throw new MethodNotAllowedHttpException([$route_info[0][1]], "Method Not Allowed");
                 break;
             /**
              * finally dispatch to our route handler
