@@ -9,6 +9,8 @@ use FastRoute\RouteCollector;
 use FastRoute\RouteParser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zend\Stratigility\MiddlewareInterface;
 
 /**
@@ -29,6 +31,7 @@ class Routing implements MiddlewareInterface
 
     /**
      * @param array $options
+     * @throws \InvalidArgumentException when passing invalid argument
      */
     public function __construct(array $options = [])
     {
@@ -36,7 +39,7 @@ class Routing implements MiddlewareInterface
          * generator type check
          */
         if (! $options["generator"] instanceof DataGenerator) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing DataGenerator must be instance of %s", DataGenerator::class)
             );
         }
@@ -45,7 +48,7 @@ class Routing implements MiddlewareInterface
          * parser type check
          */
         if (! $options["parser"] instanceof RouteParser) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing RouteParser must be instance of %s", RouteParser::class)
             );
         }
@@ -54,7 +57,7 @@ class Routing implements MiddlewareInterface
          * collection type check
          */
         if (! is_callable($options["collection"])) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing Collection must be callable")
             );
         }
@@ -67,7 +70,7 @@ class Routing implements MiddlewareInterface
              * check cache driver type
              */
             if (! isset($options["cacheDriver"]) && ! $options["cacheDriver"] instanceof Cache) {
-                throw new \UnexpectedValueException(
+                throw new \InvalidArgumentException(
                     printf("Routing CacheDriver must be instance of %s", Cache::class)
                 );
             }
@@ -106,7 +109,7 @@ class Routing implements MiddlewareInterface
          */
         $this->dispatcher = is_callable($options["dispatcher"]) ? $options["dispatcher"]($dispatch_data) : null;
         if (! $this->dispatcher instanceof Dispatcher) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing Dispatcher must be instance of %s", Dispatcher::class)
             );
         }
@@ -118,7 +121,11 @@ class Routing implements MiddlewareInterface
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @param callable $next
-     * @return mixed
+     * @throws NotFoundHttpException when uri not matched
+     * @throws MethodNotAllowedHttpException when uri is matched but http method isnt
+     * @throws \InvalidArgumentException when passing invalid argument
+     * @throws \UnexpectedValueException when returned response from handler is not implement ResponseInterface
+     * @return ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
@@ -129,32 +136,70 @@ class Routing implements MiddlewareInterface
              * if given uri dont match with our routes
              */
             case Dispatcher::NOT_FOUND:
-                if (isset($this->options["onNotFound"]) && is_callable($this->options["onNotFound"])) {
-                    $response = $this->options["onNotFound"]($request, $response);
-                    break;
-                }
-                $response = $response->withStatus(404);
-                $response->getBody()->write("Not Found");
+                throw new NotFoundHttpException("Not Found");
                 break;
             /**
              * if given uri match but method is not
              */
             case Dispatcher::METHOD_NOT_ALLOWED:
-                if (isset($this->options["onMethodNotAllowed"]) && is_callable($this->options["onMethodNotAllowed"])) {
-                    $response = $this->options["onMethodNotAllowed"]($request, $response);
-                    break;
-                }
-                $response = $response->withStatus(405);
-                $response->getBody()->write("Method Not Allowed");
+                throw new MethodNotAllowedHttpException([$route_info[0][1]], "Method Not Allowed");
                 break;
             /**
              * finally dispatch to our route handler
              */
             case Dispatcher::FOUND:
-                $response = $route_info[1]($request, $response, $route_info[2]);
+                if (is_callable($route_info[1])) {
+                    $response = $route_info[1]($request, $response, $route_info[2]);
+                    break;
+                }
+
+                list($class, $method) = explode(":", $route_info[1]);
+
+                if (!class_exists($class)) {
+                    throw new \InvalidArgumentException(sprintf("%s is not exist", $class));
+                }
+
+                $controller = new $class();
+
+                if (!method_exists($controller, $method)) {
+                    throw new \InvalidArgumentException(sprintf("%s is not found on %s", $method, $class));
+                }
+
+                $reflection_method = new \ReflectionMethod($controller, $method);
+
+                $args = $reflection_method->getParameters();
+
+                /**
+                 * fill method params
+                 */
+                $params = [];
+                foreach ($args as $arg) {
+                    if ($arg->isArray()) {
+                        $params[] = $route_info[2];
+                        continue;
+                    }
+
+                    if ($arg->getClass()->name === ServerRequestInterface::class) {
+                        $params[] = $request;
+                    }
+
+                    if ($arg->getClass()->name === ResponseInterface::class) {
+                        $params[] = $response;
+                    }
+                }
+
+                /**
+                 * call handler
+                 */
+                $response = call_user_func_array([$controller, $method], $params);
                 break;
         }
 
+        if (! $response instanceof ResponseInterface) {
+            throw new \UnexpectedValueException(
+                sprintf("Controller must return object instance of %s", ResponseInterface::class)
+            );
+        }
         return $next($request, $response);
     }
 }

@@ -66,7 +66,7 @@ Options
 
 All options is in array, with key => value format.
 
-- **collection** (callable)
+- **collection** (callable or string)
     contains registered route from `RouteCollector`
     
     ```php
@@ -81,6 +81,17 @@ All options is in array, with key => value format.
         }
     ]
     ```
+    
+    optionally you use class instead of closure for handling matched request
+    
+    ```php
+    [
+        "collection" => function (RouteCollector $collector) {
+            $collector->addRoute("GET", "/", "Fully\\Qualified\\ClassName:yourMethod");
+        }
+    ]
+    ```
+    
 - **generator** (object)
     implementation of `FastRoute\DataGenerator`
     
@@ -105,28 +116,6 @@ All options is in array, with key => value format.
     [
         "dispatcher" => function ($dispatch_data) {
             return new FastRoute\Dispatcher\GroupCountBased($dispatch_data);
-        }
-    ]
-    ```
-    
-- **onNotFound** (callable)
-    triggered when route not found
-    
-    ```php
-    [
-        "onNotFound" => function (ServerRequestInterface $req, ResponseInterface $res) {
-            // your own custom error not found handler
-        }
-    ]
-    ```
-
-- **onMethodNotAllowed** (callable)
-    trigerred when route is match but method is not
-    
-    ```php
-    [
-        "onMethodNotAllowed" => function (ServerRequestInterface $req, ResponseInterface $res) {
-            // your own custom error method not found handler
         }
     ]
     ```
