@@ -38,7 +38,7 @@ class Routing implements MiddlewareInterface
          * generator type check
          */
         if (! $options["generator"] instanceof DataGenerator) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing DataGenerator must be instance of %s", DataGenerator::class)
             );
         }
@@ -47,7 +47,7 @@ class Routing implements MiddlewareInterface
          * parser type check
          */
         if (! $options["parser"] instanceof RouteParser) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing RouteParser must be instance of %s", RouteParser::class)
             );
         }
@@ -56,7 +56,7 @@ class Routing implements MiddlewareInterface
          * collection type check
          */
         if (! is_callable($options["collection"])) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing Collection must be callable")
             );
         }
@@ -69,7 +69,7 @@ class Routing implements MiddlewareInterface
              * check cache driver type
              */
             if (! isset($options["cacheDriver"]) && ! $options["cacheDriver"] instanceof Cache) {
-                throw new \UnexpectedValueException(
+                throw new \InvalidArgumentException(
                     printf("Routing CacheDriver must be instance of %s", Cache::class)
                 );
             }
@@ -108,7 +108,7 @@ class Routing implements MiddlewareInterface
          */
         $this->dispatcher = is_callable($options["dispatcher"]) ? $options["dispatcher"]($dispatch_data) : null;
         if (! $this->dispatcher instanceof Dispatcher) {
-            throw new \UnexpectedValueException(
+            throw new \InvalidArgumentException(
                 printf("Routing Dispatcher must be instance of %s", Dispatcher::class)
             );
         }
@@ -143,10 +143,58 @@ class Routing implements MiddlewareInterface
              * finally dispatch to our route handler
              */
             case Dispatcher::FOUND:
-                $response = $route_info[1]($request, $response, $route_info[2]);
+                if (is_callable($route_info[1])) {
+                    $response = $route_info[1]($request, $response, $route_info[2]);
+                    break;
+                }
+
+                list($class, $method) = explode(":", $route_info[1]);
+
+                if (!class_exists($class)) {
+                    throw new \InvalidArgumentException(sprintf("%s is not exist", $class));
+                }
+
+                $controller = new $class();
+
+                if (!method_exists($controller, $method)) {
+                    throw new \InvalidArgumentException(sprintf("%s is not found on %s", $method, $class));
+                }
+
+                $reflection_method = new \ReflectionMethod($controller, $method);
+
+                $args = $reflection_method->getParameters();
+
+                /**
+                 * fill method params
+                 */
+                $params = [];
+                foreach ($args as $arg) {
+                    if ($arg->isArray()) {
+                        $params[] = $route_info[2];
+                        continue;
+                    }
+
+                    if ($arg->getClass()->name === ServerRequestInterface::class) {
+                        $params[] = $request;
+                    }
+
+                    if ($arg->getClass()->name === ResponseInterface::class) {
+                        $params[] = $response;
+                    }
+                }
+
+                /**
+                 * call handler
+                 */
+                $response = call_user_func_array([$controller, $method], $params);
                 break;
         }
 
+        if (! $response instanceof ResponseInterface) {
+            throw new \UnexpectedValueException(
+                sprintf("Controller must return object instance of %s", ResponseInterface::class)
+            );
+        }
         return $next($request, $response);
     }
 }
