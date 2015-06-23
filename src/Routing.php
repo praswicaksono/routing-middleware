@@ -31,6 +31,7 @@ class Routing implements MiddlewareInterface
 
     /**
      * @param array $options
+     * @throws \InvalidArgumentException when passing invalid argument
      */
     public function __construct(array $options = [])
     {
@@ -120,7 +121,11 @@ class Routing implements MiddlewareInterface
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @param callable $next
-     * @return mixed
+     * @throws NotFoundHttpException when uri not matched
+     * @throws MethodNotAllowedHttpException when uri is matched but http method isnt
+     * @throws \InvalidArgumentException when passing invalid argument
+     * @throws \UnexpectedValueException when returned response from handler is not implement ResponseInterface
+     * @return ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
