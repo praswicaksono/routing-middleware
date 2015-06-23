@@ -66,7 +66,7 @@ Options
 
 All options is in array, with key => value format.
 
-- **collection** (callable)
+- **collection** (callable or string)
     contains registered route from `RouteCollector`
     
     ```php
@@ -81,6 +81,17 @@ All options is in array, with key => value format.
         }
     ]
     ```
+    
+    optionally you use class instead of closure for handling matched request
+    
+    ```php
+    [
+        "collection" => function (RouteCollector $collector) {
+            $collector->addRoute("GET", "/", "Fully\\Qualified\\ClassName:yourMethod");
+        }
+    ]
+    ```
+    
 - **generator** (object)
     implementation of `FastRoute\DataGenerator`
     
