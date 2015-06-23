@@ -65,16 +65,14 @@ class RoutingSpec extends ObjectBehavior
         $request = ServerRequestFactory::fromGlobals()->withUri(new Uri("http://google.com/home"))->withMethod("GET");
         $response = new Response();
 
-        $res = $this->__invoke(
-            $request,
-            $response,
-            function (RequestInterface $req, ResponseInterface $res) {
-                return $res;
-            }
-        );
-
-        $res->shouldBeAnInstanceOf(ResponseInterface::class);
-        $res->getStatusCode()->shouldBeLike(404);
+        $this->shouldThrow("Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException")
+            ->during("__invoke", [
+                $request,
+                $response,
+                function (RequestInterface $req, ResponseInterface $res) {
+                    return $res;
+                }
+            ]);
     }
 
     public function it_dont_match_with_request_method()
@@ -82,86 +80,14 @@ class RoutingSpec extends ObjectBehavior
         $request = ServerRequestFactory::fromGlobals()->withUri(new Uri("http://google.com/"))->withMethod("POST");
         $response = new Response();
 
-        $res = $this->__invoke(
-            $request,
-            $response,
-            function (RequestInterface $req, ResponseInterface $res) {
-                return $res;
-            }
-        );
-
-        $res->shouldBeAnInstanceOf(ResponseInterface::class);
-        $res->getStatusCode()->shouldBeLike(405);
-    }
-
-    public function it_handle_not_found_error()
-    {
-        $this->beConstructedWith(
-            [
-                "collection" => function (RouteCollector $collector) {
-                    $collector->addRoute("GET", "/", function (ServerRequestInterface $req, ResponseInterface $res) {
-                        return $res;
-                    });
-                },
-                "generator" => new DataGenerator(),
-                "parser" => new RouteParser(),
-                "dispatcher" => function (array $dispatch_data) {
-                    return new Dispatcher($dispatch_data);
-                },
-                "onNotFound" => function (ServerRequestInterface $req, ResponseInterface $res) {
-                    return $res->withStatus(404, "Custom Not Found");
+        $this->shouldThrow("Symfony\\Component\\HttpKernel\\Exception\\MethodNotAllowedHttpException")
+            ->during("__invoke", [
+                $request,
+                $response,
+                function (RequestInterface $req, ResponseInterface $res) {
+                    return $res;
                 }
-            ]
-        );
-
-        $request = ServerRequestFactory::fromGlobals()->withUri(new Uri("http://google.com/home"))->withMethod("GET");
-        $response = new Response();
-
-        $res = $this->__invoke(
-            $request,
-            $response,
-            function (ServerRequestInterface $req, ResponseInterface $res) {
-                return $res;
-            }
-        );
-
-        $res->shouldBeAnInstanceOf(ResponseInterface::class);
-        $res->getReasonPhrase()->shouldBeLike("Custom Not Found");
-    }
-
-    public function it_handle_method_not_allowed_error()
-    {
-        $this->beConstructedWith(
-            [
-                "collection" => function (RouteCollector $collector) {
-                    $collector->addRoute("GET", "/", function (ServerRequestInterface $req, ResponseInterface $res) {
-                        return $res;
-                    });
-                },
-                "generator" => new DataGenerator(),
-                "parser" => new RouteParser(),
-                "dispatcher" => function (array $dispatch_data) {
-                    return new Dispatcher($dispatch_data);
-                },
-                "onMethodNotAllowed" => function (ServerRequestInterface $req, ResponseInterface $res) {
-                    return $res->withStatus(405, "Custom Method Not Allowed");
-                }
-            ]
-        );
-
-        $request = ServerRequestFactory::fromGlobals()->withUri(new Uri("http://google.com/"))->withMethod("POST");
-        $response = new Response();
-
-        $res = $this->__invoke(
-            $request,
-            $response,
-            function (RequestInterface $req, ResponseInterface $res) {
-                return $res;
-            }
-        );
-
-        $res->shouldBeAnInstanceOf(ResponseInterface::class);
-        $res->getReasonPhrase()->shouldBeLike("Custom Method Not Allowed");
+            ]);
     }
 
     public function it_not_valid_routing_dispatcher()
