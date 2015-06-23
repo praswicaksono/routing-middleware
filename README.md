@@ -108,28 +108,6 @@ All options is in array, with key => value format.
         }
     ]
     ```
-    
-- **onNotFound** (callable)
-    triggered when route not found
-    
-    ```php
-    [
-        "onNotFound" => function (ServerRequestInterface $req, ResponseInterface $res) {
-            // your own custom error not found handler
-        }
-    ]
-    ```
-
-- **onMethodNotAllowed** (callable)
-    trigerred when route is match but method is not
-    
-    ```php
-    [
-        "onMethodNotAllowed" => function (ServerRequestInterface $req, ResponseInterface $res) {
-            // your own custom error method not found handler
-        }
-    ]
-    ```
 
 - **cache** (boolean)
     toggle routes caching, default value is false
