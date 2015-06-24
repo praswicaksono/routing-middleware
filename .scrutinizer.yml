@@ -1,6 +1,6 @@
 filter:
     paths: [src/*]
-    excluded_paths: [vendor/*, spec/*, coverage/*]
+    excluded_paths: [vendor/*, spec/*, coverage/*, stub/*]
 checks:
   php:
     code_rating: true
