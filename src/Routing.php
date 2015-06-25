@@ -148,50 +148,7 @@ class Routing implements MiddlewareInterface
              * finally dispatch to our route handler
              */
             case Dispatcher::FOUND:
-                if (is_callable($route_info[1])) {
-                    $response = $route_info[1]($request, $response, $route_info[2]);
-                    break;
-                }
-
-                list($class, $method) = explode(":", $route_info[1]);
-
-                if (!class_exists($class)) {
-                    throw new \InvalidArgumentException(sprintf("%s is not exist", $class));
-                }
-
-                $controller = new $class();
-
-                if (!method_exists($controller, $method)) {
-                    throw new \InvalidArgumentException(sprintf("%s is not found on %s", $method, $class));
-                }
-
-                $reflection_method = new \ReflectionMethod($controller, $method);
-
-                $args = $reflection_method->getParameters();
-
-                /**
-                 * fill method params
-                 */
-                $params = [];
-                foreach ($args as $arg) {
-                    if ($arg->isArray()) {
-                        $params[] = $route_info[2];
-                        continue;
-                    }
-
-                    if ($arg->getClass()->name === ServerRequestInterface::class) {
-                        $params[] = $request;
-                    }
-
-                    if ($arg->getClass()->name === ResponseInterface::class) {
-                        $params[] = $response;
-                    }
-                }
-
-                /**
-                 * call handler
-                 */
-                $response = call_user_func_array([$controller, $method], $params);
+                $response = $this->handleFound($request, $response, $route_info);
                 break;
         }
 
@@ -201,5 +158,58 @@ class Routing implements MiddlewareInterface
             );
         }
         return $next($request, $response);
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $route_info
+     * @return ResponseInterface
+     */
+    private function handleFound(ServerRequestInterface $request, ResponseInterface $response, array $route_info)
+    {
+        if (is_callable($route_info[1])) {
+            return $route_info[1]($request, $response, $route_info[2]);
+        }
+
+        list($class, $method) = explode(":", $route_info[1]);
+
+        if (!class_exists($class)) {
+            throw new \InvalidArgumentException(sprintf("%s is not exist", $class));
+        }
+
+        $controller = new $class();
+
+        if (!method_exists($controller, $method)) {
+            throw new \InvalidArgumentException(sprintf("%s is not found on %s", $method, $class));
+        }
+
+        $reflection_method = new \ReflectionMethod($controller, $method);
+
+        $args = $reflection_method->getParameters();
+
+        /**
+         * fill method params
+         */
+        $params = [];
+        foreach ($args as $arg) {
+            if ($arg->isArray()) {
+                $params[] = $route_info[2];
+                continue;
+            }
+
+            if ($arg->getClass()->name === ServerRequestInterface::class) {
+                $params[] = $request;
+            }
+
+            if ($arg->getClass()->name === ResponseInterface::class) {
+                $params[] = $response;
+            }
+        }
+
+        /**
+         * call handler
+         */
+        return call_user_func_array([$controller, $method], $params);
     }
 }
