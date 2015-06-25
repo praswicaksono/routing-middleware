@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0b90267be88fee271a0760a7ad4ad88b",
+    "hash": "fed198b29c2597811eb1128d88a06e20",
     "packages": [
         {
             "name": "doctrine/cache",
-            "version": "dev-master",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "9930e3367777a8727e229f5126c5299890d700bb"
+                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/9930e3367777a8727e229f5126c5299890d700bb",
-                "reference": "9930e3367777a8727e229f5126c5299890d700bb",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/c9eadeb743ac6199f7eec423cb9426bc518b7b03",
+                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-05-13 10:08:10"
+            "time": "2015-04-15 00:11:59"
         },
         {
             "name": "filp/whoops",
@@ -188,16 +188,16 @@
         },
         {
             "name": "nikic/fast-route",
-            "version": "v0.5.0",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/FastRoute.git",
-                "reference": "ffb3b68a3ab0df7e60cf587d2de4937915670f16"
+                "reference": "31fa86924556b80735f98b294a7ffdfb26789f22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/ffb3b68a3ab0df7e60cf587d2de4937915670f16",
-                "reference": "ffb3b68a3ab0df7e60cf587d2de4937915670f16",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/31fa86924556b80735f98b294a7ffdfb26789f22",
+                "reference": "31fa86924556b80735f98b294a7ffdfb26789f22",
                 "shasum": ""
             },
             "require": {
@@ -227,7 +227,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2015-05-15 16:58:32"
+            "time": "2015-06-18 19:15:47"
         },
         {
             "name": "psr/http-message",
@@ -318,16 +318,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "dev-develop",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "a6b66c7d70a0fd50b932528c33041ab64520a37a"
+                "reference": "df65f70fc36f24d51a90ad706a09cd9b74fc4dd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/7d41de000298efa565d2a39fbb0a5393c159e34a",
-                "reference": "a6b66c7d70a0fd50b932528c33041ab64520a37a",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/df65f70fc36f24d51a90ad706a09cd9b74fc4dd8",
+                "reference": "df65f70fc36f24d51a90ad706a09cd9b74fc4dd8",
                 "shasum": ""
             },
             "require": {
@@ -364,7 +364,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-06-12 17:11:33"
+            "time": "2015-06-24 20:42:54"
         },
         {
             "name": "zendframework/zend-escaper",
@@ -412,16 +412,16 @@
         },
         {
             "name": "zendframework/zend-stratigility",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stratigility.git",
-                "reference": "ecc54a0290e0b526a154072e9410d3bd1d2b9b16"
+                "reference": "958b60e8d4e6b824167bd0e26277a4c40fb04c46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/ecc54a0290e0b526a154072e9410d3bd1d2b9b16",
-                "reference": "ecc54a0290e0b526a154072e9410d3bd1d2b9b16",
+                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/958b60e8d4e6b824167bd0e26277a4c40fb04c46",
+                "reference": "958b60e8d4e6b824167bd0e26277a4c40fb04c46",
                 "shasum": ""
             },
             "require": {
@@ -460,7 +460,7 @@
                 "middleware",
                 "psr-7"
             ],
-            "time": "2015-06-16 12:58:05"
+            "time": "2015-06-24 21:30:26"
         }
     ],
     "packages-dev": [
@@ -647,12 +647,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec.git",
-                "reference": "370498293c224681bd4586737e93cd576c7c5a9e"
+                "reference": "36c1e97d59630888fd022a542b1650ae5eab1f18"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpspec/phpspec/zipball/36c1e97d59630888fd022a542b1650ae5eab1f18",
-                "reference": "370498293c224681bd4586737e93cd576c7c5a9e",
+                "reference": "36c1e97d59630888fd022a542b1650ae5eab1f18",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +717,7 @@
                 "testing",
                 "tests"
             ],
-            "time": "2015-06-16 07:41:46"
+            "time": "2015-06-22 14:53:22"
         },
         {
             "name": "phpspec/prophecy",
@@ -1564,9 +1564,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zendframework/zend-diactoros": 20,
-        "nikic/fast-route": 20,
-        "doctrine/cache": 20,
         "phpspec/phpspec": 20,
         "henrikbjorn/phpspec-code-coverage": 20
     },
